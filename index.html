@@ -681,19 +681,27 @@
               class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder-white/20 focus:outline-none focus:border-[#4DAED9]/50 transition-colors">
             <input type="tel" name="telefono" placeholder="Telefono" required
               class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder-white/20 focus:outline-none focus:border-[#4DAED9]/50 transition-colors">
-            <select name="servicio" required
-              class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white/40 focus:outline-none focus:border-[#4DAED9]/50 transition-colors">
-              <option value="" disabled selected>Tipo de servicio</option>
-              <option value="maquinaria">Maquinaria Pesada CAT</option>
-              <option value="lanchas">Lanchas y Embarcaciones</option>
-              <option value="automoviles">Automoviles</option>
-              <option value="clasicos">Autos Clasicos</option>
-              <option value="camiones">Camiones Mixer</option>
-              <option value="motos">Motocicletas</option>
-              <option value="fibra">Fibra de Vidrio</option>
-              <option value="graficas">Graficas Corporativas</option>
-              <option value="otro">Otro</option>
-            </select>
+            <input type="hidden" name="servicio" id="servicio-value" required>
+            <div class="relative" id="custom-select">
+              <button type="button" onclick="toggleDropdown()" id="select-btn"
+                class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-left text-white/30 focus:outline-none focus:border-[#4DAED9]/50 transition-colors flex items-center justify-between">
+                <span id="select-label">Tipo de servicio</span>
+                <svg class="w-5 h-5 text-white/20 transition-transform duration-200" id="select-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <div id="select-dropdown" class="hidden absolute left-0 right-0 top-full mt-2 bg-[#1a1a1a] border border-white/[0.1] rounded-xl overflow-hidden z-30 shadow-2xl shadow-black/50 max-h-64 overflow-y-auto">
+                <div class="py-1" role="listbox">
+                  <button type="button" onclick="pickOption('maquinaria','Maquinaria Pesada CAT')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Maquinaria Pesada CAT</button>
+                  <button type="button" onclick="pickOption('lanchas','Lanchas y Embarcaciones')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Lanchas y Embarcaciones</button>
+                  <button type="button" onclick="pickOption('automoviles','Automoviles')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Automoviles</button>
+                  <button type="button" onclick="pickOption('clasicos','Autos Clasicos')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Autos Clasicos</button>
+                  <button type="button" onclick="pickOption('camiones','Camiones Mixer')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Camiones Mixer</button>
+                  <button type="button" onclick="pickOption('motos','Motocicletas')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Motocicletas</button>
+                  <button type="button" onclick="pickOption('fibra','Fibra de Vidrio')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Fibra de Vidrio</button>
+                  <button type="button" onclick="pickOption('graficas','Graficas Corporativas')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Graficas Corporativas</button>
+                  <button type="button" onclick="pickOption('otro','Otro')" class="dd-opt w-full text-left px-5 py-3 text-sm text-white/60 hover:bg-white/[0.06] hover:text-white transition-colors">Otro</button>
+                </div>
+              </div>
+            </div>
             <textarea name="mensaje" rows="4" placeholder="Describe tu proyecto..." required
               class="w-full bg-white/[0.03] border border-white/[0.08] rounded-xl px-5 py-4 text-white placeholder-white/20 focus:outline-none focus:border-[#4DAED9]/50 transition-colors resize-none"></textarea>
             <button type="submit"
@@ -814,8 +822,9 @@
     document.getElementById('contact-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const d = new FormData(this);
+      const servicio = document.getElementById('select-label').textContent;
       const msg = encodeURIComponent(
-        `Hola Mario, soy ${d.get('nombre')}.\nServicio: ${d.get('servicio')}\n${d.get('mensaje')}\nMi telefono: ${d.get('telefono')}`
+        `Hola Mario, soy ${d.get('nombre')}.\nServicio: ${servicio}\n${d.get('mensaje')}\nMi telefono: ${d.get('telefono')}`
       );
       this.classList.add('hidden');
       document.getElementById('form-success').classList.remove('hidden');
@@ -831,6 +840,30 @@
     const nav = document.querySelector('nav');
     window.addEventListener('scroll', () => {
       nav.style.backgroundColor = window.scrollY > 50 ? 'rgba(5,5,5,0.95)' : '';
+    });
+
+    // ====== CUSTOM DROPDOWN ======
+    function toggleDropdown() {
+      const dd = document.getElementById('select-dropdown');
+      const arrow = document.getElementById('select-arrow');
+      dd.classList.toggle('hidden');
+      arrow.style.transform = dd.classList.contains('hidden') ? '' : 'rotate(180deg)';
+    }
+    function pickOption(value, label) {
+      document.getElementById('servicio-value').value = value;
+      document.getElementById('select-label').textContent = label;
+      document.getElementById('select-btn').classList.remove('text-white/30');
+      document.getElementById('select-btn').classList.add('text-white');
+      document.querySelectorAll('.dd-opt').forEach(b => b.classList.remove('bg-white/[0.06]', 'text-[#4DAED9]'));
+      event.currentTarget.classList.add('text-[#4DAED9]');
+      toggleDropdown();
+    }
+    document.addEventListener('click', function(e) {
+      const sel = document.getElementById('custom-select');
+      if (!sel.contains(e.target)) {
+        document.getElementById('select-dropdown').classList.add('hidden');
+        document.getElementById('select-arrow').style.transform = '';
+      }
     });
 
     // ====== COTIZADOR ======
