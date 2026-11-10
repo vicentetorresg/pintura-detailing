@@ -88,6 +88,7 @@
     .gallery-item:hover::after { opacity: 1; }
     .gallery-item img { transition: transform 0.6s ease; }
     .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-filter.active { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.3); }
 
     /* Video container */
     .video-showcase video {
@@ -608,31 +609,68 @@
         </div>
       </div>
 
-      <!-- Photo Gallery -->
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square">
+      <!-- Photo Gallery — Filter Tabs -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8 reveal">
+        <button class="gallery-filter active px-5 py-2 rounded-full text-sm font-medium border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/20 transition-all" data-filter="all">Todos</button>
+        <button class="gallery-filter px-5 py-2 rounded-full text-sm font-medium border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/20 transition-all" data-filter="autos">Autos</button>
+        <button class="gallery-filter px-5 py-2 rounded-full text-sm font-medium border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/20 transition-all" data-filter="maquinaria">Maquinaria</button>
+        <button class="gallery-filter px-5 py-2 rounded-full text-sm font-medium border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/20 transition-all" data-filter="camiones">Camiones</button>
+        <button class="gallery-filter px-5 py-2 rounded-full text-sm font-medium border border-white/10 bg-white/5 text-white/60 hover:text-white hover:border-white/20 transition-all" data-filter="piezas">Piezas</button>
+      </div>
+
+      <!-- Photo Grid -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="gallery-grid">
+        <!-- Autos -->
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="autos">
+          <img src="assets/img/range-rover.jpg" alt="Range Rover Sport detailing profesional" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="autos">
+          <img src="assets/img/ssangyong-booth.jpg" alt="SsangYong pintado en cabina profesional" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="autos">
+          <img src="assets/img/bronco-antes.jpg" alt="Ford Bronco Sport antes de restauración" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="autos">
           <img src="assets/img/IMG_5502.jpg" alt="Restauración Mini Cooper clásico" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square">
-          <img src="assets/img/IMG_5504.jpg" alt="Preparación Ford Ranger para pintura" class="w-full h-full object-cover" loading="lazy">
+        <!-- Maquinaria -->
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="maquinaria">
+          <img src="assets/img/cat-bulldozer.jpg" alt="Bulldozer CAT pintura completa" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square">
-          <img src="assets/img/IMG_5505.jpg" alt="Proceso de enmascarado camioneta" class="w-full h-full object-cover" loading="lazy">
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="maquinaria">
+          <img src="assets/img/bobcat-despues.jpg" alt="Bobcat S630 restaurada — resultado final" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square">
-          <img src="assets/img/IMG_5510.jpg" alt="Detalle pintura Ford Ranger" class="w-full h-full object-cover" loading="lazy">
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="maquinaria">
+          <img src="assets/img/bobcat-antes.jpg" alt="Bobcat S630 antes de restauración" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square">
-          <img src="assets/img/IMG_5511.jpg" alt="Trabajo de pintura profesional" class="w-full h-full object-cover" loading="lazy">
+        <!-- Camiones -->
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="camiones">
+          <img src="assets/img/mixer-despues.jpg" alt="Camión mixer Transex — resultado final" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square">
-          <img src="assets/img/IMG_5512.jpg" alt="Vista lateral trabajo en taller" class="w-full h-full object-cover" loading="lazy">
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="camiones">
+          <img src="assets/img/mixer-antes.jpg" alt="Camión mixer antes de restauración" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square">
-          <img src="assets/img/IMG_5517.jpg" alt="Mario Torres trabajando en pintura" class="w-full h-full object-cover" loading="lazy">
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="camiones">
+          <img src="assets/img/camion-proceso.jpg" alt="Camión en proceso de pintura — enmascarado" class="w-full h-full object-cover" loading="lazy">
         </div>
-        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square">
-          <img src="assets/img/IMG_5523.jpg" alt="Resultado final pintura profesional" class="w-full h-full object-cover" loading="lazy">
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="camiones">
+          <img src="assets/img/camion-tx.jpg" alt="Camión TX con gráficas corporativas" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="camiones">
+          <img src="assets/img/mixer-taller.jpg" alt="Mixer en taller siendo pintado" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <!-- Piezas & Proceso -->
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="piezas">
+          <img src="assets/img/motor-piezas.jpg" alt="Piezas de motor pintadas en negro" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="autos">
+          <img src="assets/img/IMG_5504.jpg" alt="Ford Ranger preparación para pintura" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="autos">
+          <img src="assets/img/IMG_5523.jpg" alt="Ford Ranger resultado final" class="w-full h-full object-cover" loading="lazy">
+        </div>
+        <div class="gallery-item rounded-2xl overflow-hidden border border-white/[0.06] reveal aspect-square" data-cat="piezas">
+          <img src="assets/img/IMG_5510.jpg" alt="Detalle pintura profesional" class="w-full h-full object-cover" loading="lazy">
         </div>
       </div>
     </div>
@@ -910,6 +948,29 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ====== GALLERY FILTER ======
+    document.querySelectorAll('.gallery-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.gallery-filter').forEach(b => b.classList.remove('active', 'bg-white/10', 'text-white', 'border-white/30'));
+        btn.classList.add('active', 'bg-white/10', 'text-white', 'border-white/30');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('#gallery-grid .gallery-item').forEach(item => {
+          if (filter === 'all' || item.dataset.cat === filter) {
+            item.style.display = '';
+            item.style.opacity = '0';
+            item.style.transform = 'scale(0.95)';
+            requestAnimationFrame(() => {
+              item.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+              item.style.opacity = '1';
+              item.style.transform = 'scale(1)';
+            });
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
 
     // Form → WhatsApp redirect
     document.getElementById('contact-form').addEventListener('submit', function(e) {
